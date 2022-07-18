@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const { Category, Product } = require("../../models");
-const { restore } = require("../../models/Product");
 
 // The `/api/categories` endpoint
 
@@ -9,8 +8,8 @@ router.get("/", (req, res) => {
   // be sure to include its associated Products
   Category.findAll({
     include: [Product],
-  }).then((dbcategory) => {
-    res.json(dbcategory);
+  }).then((dbCategory) => {
+    res.json(dbCategory);
   });
 });
 
@@ -22,26 +21,26 @@ router.get("/:id", (req, res) => {
       id: req.params.id,
     },
     include: [Product],
-  }).then((dbcategory) => {
-    res.json(dbcategory);
+  }).then((dbCategory) => {
+    res.json(dbCategory);
   });
 });
 
 router.post("/", (req, res) => {
   // create a new category
-  Category.create(req.body).then((dbcategory) => {
-    restore.json(dbcategory);
+  Category.create(req.body).then((dbCategory) => {
+    res.json(dbCategory);
   });
 });
 
 router.put("/:id", (req, res) => {
   // update a category by its `id` value
-  Category.update({
+  Category.update(req.body, {
     where: {
       id: req.params.id,
     },
-  }).then((dbcategory) => {
-    res.json(dbcategory);
+  }).then((dbCategory) => {
+    res.json(dbCategory);
   });
 });
 
@@ -51,8 +50,8 @@ router.delete("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
-  }).then((dbcategory) => {
-    res.json(dbcategory);
+  }).then((dbCategory) => {
+    res.json(dbCategory);
   });
 });
 

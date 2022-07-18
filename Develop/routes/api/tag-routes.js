@@ -6,41 +6,43 @@ const { Tag, Product, ProductTag } = require("../../models");
 router.get("/", (req, res) => {
   // find all tags
   // be sure to include its associated Product data
-  Category.findAll({
-    include: [Tag],
-  }).then((dbtag) => {
-    res.json(dbtag);
+  Tag.findAll({
+    include: [Product],
+  }).then((tags) => {
+    res.json(tags);
   });
 });
 
 router.get("/:id", (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
-  Category.findOne({
+  Tag.findOne({
     where: {
       id: req.params.id,
     },
-    include: [Tag],
-  }).then((dbtag) => {
-    res.json(dbtag);
+    include: [Product],
+  }).then((tags) => {
+    res.json(tags);
   });
 });
 
 router.post("/", (req, res) => {
   // create a new tag
-  Tag.create(req.body).then((dbtag) => {
-    restore.json(dbtag);
+  Tag.create({
+    tag_name: req.body.tag_name,
+  }).then((tags) => {
+    res.json(tags);
   });
 });
 
 router.put("/:id", (req, res) => {
   // update a tag's name by its `id` value
-  Tag.update({
+  Tag.update(req.body, {
     where: {
       id: req.params.id,
     },
-  }).then((dbtag) => {
-    res.json(dbtag);
+  }).then((tags) => {
+    res.json(tags);
   });
 });
 
@@ -50,8 +52,8 @@ router.delete("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
-  }).then((dbtag) => {
-    res.json(dbtag);
+  }).then((tags) => {
+    res.json(tags);
   });
 });
 
