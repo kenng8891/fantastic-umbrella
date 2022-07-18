@@ -8,9 +8,12 @@ router.get("/", (req, res) => {
   // be sure to include its associated Product data
   Tag.findAll({
     include: [Product],
-  }).then((tags) => {
-    res.json(tags);
-  });
+  })
+    .then((dbTags) => res.json(dbTags))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 router.get("/:id", (req, res) => {
@@ -21,18 +24,24 @@ router.get("/:id", (req, res) => {
       id: req.params.id,
     },
     include: [Product],
-  }).then((tags) => {
-    res.json(tags);
-  });
+  })
+    .then((dbTags) => res.json(dbTags))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 router.post("/", (req, res) => {
   // create a new tag
   Tag.create({
     tag_name: req.body.tag_name,
-  }).then((tags) => {
-    res.json(tags);
-  });
+  })
+    .then((dbTags) => res.json(dbTags))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 router.put("/:id", (req, res) => {
@@ -41,9 +50,12 @@ router.put("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
-  }).then((tags) => {
-    res.json(tags);
-  });
+  })
+    .then((dbTags) => res.json(dbTags))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 router.delete("/:id", (req, res) => {
@@ -52,9 +64,12 @@ router.delete("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
-  }).then((tags) => {
-    res.json(tags);
-  });
+  })
+    .then((dbTags) => res.json(dbTags))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 module.exports = router;

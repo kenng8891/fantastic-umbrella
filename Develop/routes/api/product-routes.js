@@ -10,9 +10,12 @@ router.get("/", (req, res) => {
   // be sure to include its associated Category and Tag data
   Product.findAll({
     include: [Category, Tag],
-  }).then((dbProduct) => {
-    res.json(dbProduct);
-  });
+  })
+    .then((dbProduct) => res.json(dbProduct))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // get one product
@@ -24,9 +27,12 @@ router.get("/:id", (req, res) => {
       id: req.params.id,
     },
     include: [Category, Tag],
-  }).then((dbProduct) => {
-    res.json(dbProduct);
-  });
+  })
+    .then((dbProduct) => res.json(dbProduct))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // create new product
